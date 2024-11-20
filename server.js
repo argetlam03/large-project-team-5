@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 //TODO: Database Implementation
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://dbAdmin:i79M5ezCQfyyYX@@processes.ysma6.mongodb.net/COP4331?retryWrites=true&w=majority&appName=Processes';
+const url = 'mongodb+srv://dbAdmin:itMmocaV6xThvvQq@processes.ysma6.mongodb.net/COP4331?retryWrites=true&w=majority&appName=Processes';
 const client = new MongoClient(url);
 client.connect();
 
