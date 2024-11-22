@@ -6,11 +6,26 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-//TODO: Database Implementation
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb+srv://dbAdmin:itMmocaV6xThvvQq@processes.ysma6.mongodb.net/COP4331?retryWrites=true&w=majority&appName=Processes';
 const client = new MongoClient(url);
 client.connect();
+
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PATCH, DELETE, OPTIONS'
+    );
+    next();
+});
+
+app.listen(5000);
 
 app.post('/api/login', async (req, res, next) => {
     var error = '';
@@ -19,7 +34,6 @@ app.post('/api/login', async (req, res, next) => {
     var fn = '';
     var ln = '';
 
-    // TODO: Database Implementation
     try {
         const db = client.db();
         const results = await db.collection('Users').find({ Login: login, Password: password }).toArray();
@@ -37,16 +51,6 @@ app.post('/api/login', async (req, res, next) => {
         error = e.toString();
     }
 
-
-    if (login.toLowerCase() == 'test' && password == 'test') {
-        id = 1;
-        fn = 'TestFirst';
-        ln = 'TestLast';
-    }
-    else {
-        error = 'Invalid user name/password';
-    }
-
     var ret = { id: id, firstName: fn, lastName: ln, error: error };
     res.status(200).json(ret);
 });
@@ -62,7 +66,6 @@ app.post('/api/createUser', async (req, res, next) => {
         Email: email
     };
 
-    // TODO: Database Implementation
     try {
         const db = client.db();
         const result = db.collection('Users').insertOne(newUser);
@@ -74,18 +77,3 @@ app.post('/api/createUser', async (req, res, next) => {
     var ret = { error: error };
     res.status(200).json(ret);
 });
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, PATCH, DELETE, OPTIONS'
-    );
-    next();
-});
-
-app.listen(5000);
