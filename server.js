@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const crypto = require('crypto');
 
 const app = express();
 app.use(cors());
@@ -27,6 +28,10 @@ app.use((req, res, next) => {
 
 app.listen(5000);
 
+function generateMD5(data) {
+    return crypto.createHash('md5').update(data).digest('hex');
+}
+
 app.post('/api/login', async (req, res, next) => {
     var error = '';
     const { login, password } = req.body;
@@ -36,7 +41,7 @@ app.post('/api/login', async (req, res, next) => {
 
     try {
         const db = client.db();
-        const results = await db.collection('Users').find({ Login: login, Password: password }).toArray();
+        const results = await db.collection('Users').find({ Login: login, Password: generateMD5(password) }).toArray();
 
         if (results.length > 0) {
             id = results[0]._id;
@@ -47,7 +52,7 @@ app.post('/api/login', async (req, res, next) => {
             error = 'Invalid user name/password';
         }
     }
-    catch(e) {
+    catch (e) {
         error = e.toString();
     }
 
@@ -59,8 +64,8 @@ app.post('/api/createUser', async (req, res, next) => {
     var error = '';
     const { login, password, firstName, lastName, email } = req.body;
     const newUser = {
-        Login: login, 
-        Password: password,
+        Login: login,
+        Password: generateMD5(password),
         FirstName: firstName,
         LastName: lastName,
         Email: email,
@@ -113,7 +118,7 @@ app.post('/api/getUser', async (req, res, next) => {
         error = e.toString();
     }
 
-    var ret = { 
+    var ret = {
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -121,43 +126,39 @@ app.post('/api/getUser', async (req, res, next) => {
         avgAcc: avgAcc,
         avgWpm: avgWpm,
         maxWpm: maxWpm,
-        error: error 
+        error: error
     };
 
     res.status(200).json(ret);
 });
 
 app.post('/api/getSettings', async (req, res, next) => {
-    var error = ''; 
+    var error = '';
     const { id } = req.body;
     var firstName = '';
     var lastName = '';
     var email = '';
     var login = '';
 
-    try
-    {
+    try {
         const db = client.db();
         const results = await db.collection('Users').find({ _id: ObjectId.createFromHexString(id) }).toArray();
 
-        if(results.length > 0)
-        {
+        if (results.length > 0) {
             firstName = results[0].FirstName;
             lastName = results[0].LastName;
             email = results[0].Email;
             login = results[0].Login;
         }
-        else
-        {
+        else {
             error = 'Failed to retrieve user settings. Please verify the user ID or try again later.';
         }
     }
-    catch(e)
-    {
+    catch (e) {
         error = e.toString();
     }
 
-    var ret = 
+    var ret =
     {
         firstName: firstName,
         lastName: lastName,
