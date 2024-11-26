@@ -127,3 +127,44 @@ app.post('/api/getUser', async (req, res, next) => {
     res.status(200).json(ret);
 });
 
+app.post('/api/getSettings', async (req, res, next) => {
+    var error = ''; 
+    const { id } = req.body;
+    var firstName = '';
+    var lastName = '';
+    var email = '';
+    var login = '';
+
+    try
+    {
+        const db = client.db();
+        const results = await db.collection('Users').find({ _id: ObjectId.createFromHexString(id) }).toArray();
+
+        if(results.length > 0)
+        {
+            firstName = results[0].FirstName;
+            lastName = results[0].LastName;
+            email = results[0].Email;
+            login = results[0].Login;
+        }
+        else
+        {
+            error = 'Failed to retrieve user settings. Please verify the user ID or try again later.';
+        }
+    }
+    catch(e)
+    {
+        error = e.toString();
+    }
+
+    var ret = 
+    {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        login: login,
+        error: error
+    };
+
+    res.status(200).json(ret);
+});
