@@ -181,13 +181,12 @@ app.post('/api/updateSettings', async (req, res, next) => {
         if (login) updateFields.Login = login;
         if (firstName) updateFields.FirstName = firstName;
         if (lastName) updateFields.LastName = lastName;
-        if (email) updateFields.Email = email; 
+        if (email) updateFields.Email = email;
 
-        if (Object.keys(updateFields).length > 0)
-        {
-            const results = await db.collection('Users').updateOne( {_id: ObjectId.createFromHexString(id)}, {$set: updateFields} );
-            
-            if (results.modifiedCount === 0){
+        if (Object.keys(updateFields).length > 0) {
+            const results = await db.collection('Users').updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: updateFields });
+
+            if (results.modifiedCount === 0) {
                 error = 'Failed to update settings';
             }
         }
@@ -199,8 +198,49 @@ app.post('/api/updateSettings', async (req, res, next) => {
 
     var ret =
     {
-      success: error === "",
-      error: error
+        success: error === "",
+        error: error
+    };
+
+    res.status(200).json(ret);
+});
+
+app.post('/api/saveScore', async (req, res, next) => {
+    var error = '';
+    const { id, avgAcc, avgWpm, maxWpm } = req.body;
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Users').findOne({ _id: ObjectId.createFromHexString(id) }).toArray();
+
+        if (user) {
+            const saveScore = {};
+            saveScore.AvgAcc = avgAcc;
+            saveScore.AvgWpm = avgWpm;
+            saveScore.MaxWpm = maxWpm;
+
+
+
+            const results = await db.collection('Users').updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: saveScore });
+
+            if (updateResult.modifiedCount === 0) {
+                error = 'No fields were updated';
+            }
+
+        }
+        else {
+            error = 'Unable to save score';
+        }
+    }
+    catch (e) {
+        error = e.toString();
+    }
+
+    var ret =
+    {
+        avgAcc: avgAcc,
+        avgWpm: avgWpm,
+        maxWpm: maxWpm
     };
 
     res.status(200).json(ret);
