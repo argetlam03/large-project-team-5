@@ -145,10 +145,10 @@ app.post('/api/getSettings', async (req, res, next) => {
         const results = await db.collection('Users').find({ _id: ObjectId.createFromHexString(id) }).toArray();
 
         if (results.length > 0) {
+            login = results[0].Login;
             firstName = results[0].FirstName;
             lastName = results[0].LastName;
             email = results[0].Email;
-            login = results[0].Login;
         }
         else {
             error = 'Failed to retrieve user settings. Please verify the user ID or try again later.';
@@ -160,11 +160,47 @@ app.post('/api/getSettings', async (req, res, next) => {
 
     var ret =
     {
+        login: login,
         firstName: firstName,
         lastName: lastName,
         email: email,
-        login: login,
         error: error
+    };
+
+    res.status(200).json(ret);
+});
+
+app.post('/api/updateSettings', async (req, res, next) => {
+    var error = '';
+    const { id, login, firstName, lastName, email } = req.body;
+
+    try {
+        const db = client.db();
+
+        const updateFields = {};
+        if (login) updateFields.Login = login;
+        if (firstName) updateFields.FirstName = firstName;
+        if (lastName) updateFields.LastName = lastName;
+        if (email) updateFields.Email = email; 
+
+        if (Object.keys(updateFields).length > 0)
+        {
+            const results = await db.collection('Users').updateOne( {_id: ObjectId.createFromHexString(id)}, {$set: updateFields} );
+            
+            if (results.modifiedCount === 0){
+                error = 'Failed to update settings';
+            }
+        }
+
+    }
+    catch (e) {
+        error = e.toString();
+    }
+
+    var ret =
+    {
+      success: error === "",
+      error: error
     };
 
     res.status(200).json(ret);
