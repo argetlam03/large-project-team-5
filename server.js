@@ -90,7 +90,7 @@ app.post('/api/createUser', async (req, res, next) => {
         catch (e) {
             error = e.toString();
         }
-    }  
+    }
 
     var ret = { error: error };
     res.status(200).json(ret);
@@ -224,8 +224,8 @@ app.post('/api/saveScore', async (req, res, next) => {
             const list = user[0].WpmList;
 
             const newStats = {
-                AvgAcc: (user[0].AvgAcc * num + acc)/(num + 1),
-                AvgWpm: parseInt((user[0].AvgWpm * num + wpm)/(num + 1)),
+                AvgAcc: (user[0].AvgAcc * num + acc) / (num + 1),
+                AvgWpm: parseInt((user[0].AvgWpm * num + wpm) / (num + 1)),
                 MaxWpm: Math.max(user[0].MaxWpm, wpm),
                 WpmList: [wpm, list[0], list[1], list[2], list[3], list[4], list[5], list[6], list[7], list[8]],
                 TypeNum: num + 1
@@ -276,5 +276,40 @@ app.post('/api/getRecentStats', async (req, res, next) => {
         error: error
     };
 
+    res.status(200).json(ret);
+});
+
+app.post('/api/getSearch', async (req, res, next) => {
+
+    var error = '';
+    const { search } = req.body;
+
+    var _search = search.trim();
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Users').find({ "Login": { $regex: _search + '.*' }, }).toArray();
+
+        var _ret = [];
+        if (results.length > 0) {
+            for (var i = 0; i < results.length; i++) {
+                _ret.push(results[i].Login);
+                _ret.push(results[i].AvgAcc);
+                _ret.push(results[i].AvgWpm);
+                _ret.push(results[i].MaxWpm);
+            }
+        }
+        else {
+            error = 'No users found.';
+        }
+    }
+    catch (e) {
+        error = e.toString();
+    }
+
+    var ret = {
+        results: _ret,
+        error: error
+    };
     res.status(200).json(ret);
 });
