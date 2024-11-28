@@ -69,18 +69,28 @@ app.post('/api/createUser', async (req, res, next) => {
         FirstName: firstName,
         LastName: lastName,
         Email: email,
+        TypeNum: 0,
         AvgAcc: 0.00,
         AvgWpm: 0,
-        MaxWpm: 0
+        MaxWpm: 0,
+        WpmList: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     };
 
-    try {
-        const db = client.db();
-        const result = db.collection('Users').insertOne(newUser);
-    }
-    catch (e) {
-        error = e.toString();
-    }
+    if (!login || !password || !firstName || !lastName || !email) {
+        error = "Please enter valid values."
+    } else {
+        try {
+            const db = client.db();
+            const result = db.collection('Users').insertOne(newUser);
+
+            if (result.modifiedCount === 0) {
+                error = 'Failed creating user.';
+            }
+        }
+        catch (e) {
+            error = e.toString();
+        }
+    }  
 
     var ret = { error: error };
     res.status(200).json(ret);
@@ -111,7 +121,7 @@ app.post('/api/getUser', async (req, res, next) => {
             maxWpm = results[0].MaxWpm;
         }
         else {
-            error = 'Invalid user name/password';
+            error = 'Invalid user.';
         }
     }
     catch (e) {
@@ -151,7 +161,7 @@ app.post('/api/getSettings', async (req, res, next) => {
             email = results[0].Email;
         }
         else {
-            error = 'Failed to retrieve user settings. Please verify the user ID or try again later.';
+            error = 'Failed to retrieve user settings.';
         }
     }
     catch (e) {
@@ -196,51 +206,74 @@ app.post('/api/updateSettings', async (req, res, next) => {
         error = e.toString();
     }
 
-    var ret =
-    {
-        success: error === "",
-        error: error
-    };
+    var ret = { error: error };
 
     res.status(200).json(ret);
 });
 
 app.post('/api/saveScore', async (req, res, next) => {
     var error = '';
-    const { id, avgAcc, avgWpm, maxWpm } = req.body;
+    const { id, acc, wpm } = req.body;
 
     try {
         const db = client.db();
-        const results = await db.collection('Users').findOne({ _id: ObjectId.createFromHexString(id) }).toArray();
+        const user = await db.collection('Users').find({ _id: ObjectId.createFromHexString(id) }).toArray();
 
         if (user) {
-            const saveScore = {};
-            saveScore.AvgAcc = avgAcc;
-            saveScore.AvgWpm = avgWpm;
-            saveScore.MaxWpm = maxWpm;
+            const num = user[0].TypeNum;
+            const list = user[0].WpmList;
 
+            const newStats = {
+                AvgAcc: (user[0].AvgAcc * num + acc)/(num + 1),
+                AvgWpm: parseInt((user[0].AvgWpm * num + wpm)/(num + 1)),
+                MaxWpm: Math.max(user[0].MaxWpm, wpm),
+                WpmList: [wpm, list[0], list[1], list[2], list[3], list[4], list[5], list[6], list[7], list[8]],
+                TypeNum: num + 1
+            };
 
+            const results = await db.collection('Users').updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: newStats });
 
-            const results = await db.collection('Users').updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: saveScore });
-
-            if (updateResult.modifiedCount === 0) {
-                error = 'No fields were updated';
+            if (results.modifiedCount === 0) {
+                error = 'Unable to save score';
             }
 
         }
         else {
-            error = 'Unable to save score';
+            error = 'User does not exist';
         }
     }
     catch (e) {
         error = e.toString();
     }
 
-    var ret =
-    {
-        avgAcc: avgAcc,
-        avgWpm: avgWpm,
-        maxWpm: maxWpm
+    var ret = { error: error };
+
+    res.status(200).json(ret);
+});
+
+app.post('/api/getRecentStats', async (req, res, next) => {
+    var error = '';
+    const { id } = req.body;
+    var stats = [];
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Users').find({ _id: ObjectId.createFromHexString(id) }).toArray();
+
+        if (results.length > 0) {
+            stats = results[0].WpmList;
+        }
+        else {
+            error = 'Could not find recent stats.';
+        }
+    }
+    catch (e) {
+        error = e.toString();
+    }
+
+    var ret = {
+        stats: stats,
+        error: error
     };
 
     res.status(200).json(ret);
