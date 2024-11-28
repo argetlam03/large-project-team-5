@@ -292,12 +292,12 @@ app.post('/api/getSearch', async (req, res, next) => {
 
         var _ret = [];
         if (results.length > 0) {
-            for (var i = 0; i < results.length; i++) {
-                _ret.push(results[i].Login);
-                _ret.push(results[i].AvgAcc);
-                _ret.push(results[i].AvgWpm);
-                _ret.push(results[i].MaxWpm);
-            }
+            _ret = results.map(user => ({
+                Login: user.Login,
+                AvgAcc: user.AvgAcc,
+                AvgWpm: user.AvgWpm,
+                MaxWpm: user.MaxWpm
+            }));
         }
         else {
             error = 'No users found.';
@@ -308,6 +308,50 @@ app.post('/api/getSearch', async (req, res, next) => {
     }
 
     var ret = {
+        results: _ret,
+        error: error
+    };
+    res.status(200).json(ret);
+});
+
+app.post('/api/getLeaderboard', async (req, res, next) => {
+
+    var error = '';
+    const { search, sort } = req.body;
+
+    var _search = search.trim();
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Users').find({ "Login": { $regex: _search + '.*' }, }).toArray();
+
+        var _ret = [];
+        if (results.length > 0) {
+            _ret = results.map(user => ({
+                Login: user.Login,
+                AvgAcc: user.AvgAcc,
+                AvgWpm: user.AvgWpm,
+                MaxWpm: user.MaxWpm
+            }));
+        }
+        else {
+            error = 'No users found.';
+        }
+    }
+    catch (e) {
+        error = e.toString();
+    }
+    if (sort === "AvgAcc") {
+        _ret.sort((a, b) => b.AvgAcc - a.AvgAcc);
+    }
+    else if (sort === "AvgWpm") {
+        _ret.sort((a, b) => b.AvgWpm - a.AvgWpm);
+    }
+    else if (sort === "MaxWpm") {
+        _ret.sort((a, b) => b.MaxWpm - a.MaxWpm);
+    }
+
+    const ret = {
         results: _ret,
         error: error
     };
