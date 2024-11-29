@@ -4,6 +4,7 @@ import './../styles/leaderboard.css';
 function LeaderboardComponent() {
     const [message, setMessage] = React.useState('');
     const [table, setTable] = React.useState<any[]>([]);
+    const [search, setSearch] = React.useState('');
 
     async function getLeaderboard(): Promise<void> {
         var obj = { search: '', sort: 'AvgWpm' };
@@ -23,7 +24,6 @@ function LeaderboardComponent() {
             }
             else {
                 setMessage('');
-                setTable([]);
                 const tableData = generateTable(res.results);
                 setTable([...table, ...tableData]);
             }
@@ -33,6 +33,7 @@ function LeaderboardComponent() {
             return;
         }
     };
+
 
     function generateTable(res: any[]) {
         const entries = [];
@@ -50,12 +51,17 @@ function LeaderboardComponent() {
         return entries;
     }
 
+    function handleSetSearch(e: any): void {
+        setSearch(e.target.value);
+    }
+
     React.useEffect(() => { getLeaderboard() }, [])
     
     return (
         table &&
         <div id="leaderboardContainer">
             <h1>Leaderboard</h1>
+            <input id="userSearch" onChange={handleSetSearch} placeholder="Search" value={search} />
             <table id="leaderboardTable">
                 <thead>
                     <tr>
@@ -66,9 +72,12 @@ function LeaderboardComponent() {
                         <th>Highest WPM</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableBody">
                     {
-                        table.map((obj, i) => {
+                        table.filter((obj) => {
+                            return search === '' ? obj : obj.username.toLowerCase().includes(search);
+                        })
+                        .map((obj, i) => {
                             return (
                                 <tr key={i} >
                                     <td>{obj.rank}</td>
