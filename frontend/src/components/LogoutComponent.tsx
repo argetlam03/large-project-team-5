@@ -7,10 +7,10 @@ function LogoutComponent() {
         window.location.href = '/';
     };
     return (
-        <div id="logout">
+        <span id="logout">
             <button type="button" id="logoutButton" className="buttons"
                 onClick={doLogout}> Log Out </button>
-        </div>
+        </span>
     );
 };
 export default LogoutComponent;

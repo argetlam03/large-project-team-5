@@ -46,7 +46,7 @@ function LoginComponent() {
             <span id="login-title">Login</span>
             <input type="text" id="loginName" placeholder="Username" onChange={handleSetLoginName} />
             <input type="password" id="loginPassword" placeholder="Password" onChange={handleSetPassword} />
-            <button type="button" id="loginButton" className="buttons"
+            <button type="button" id="loginButton" className="buttons login-buttons"
                 onClick={doLogin}>Login</button>
             <br/>
             <span id="loginResult">{message}</span>

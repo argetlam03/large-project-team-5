@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import LogoutComponent from './LogoutComponent';
+import './../styles/sidenav.css';
+
 function SideNavComponent() {
 
     function gotoProfile(){
@@ -14,9 +15,9 @@ function SideNavComponent() {
 
     return (
         <div id="sideNavHeader">
-            <input type="button" id="profileButton" className="buttons" value="Profile" onClick={gotoProfile} />
-            <input type="button" id="leaderboardButton" className="buttons" value="Leaderboard" onClick={gotoLeaderboard} />
-            <input type="button" id="typeButton" className="buttons" value="Type" onClick={gotoType} />
+            <button type="button" id="typeButton" className="buttons sideNavButtons" onClick={gotoType}>Typing</button>
+            <button type="button" id="profileButton" className="buttons sideNavButtons" onClick={gotoProfile}>Profile</button>
+            <button type="button" id="leaderboardButton" className="buttons sideNavButtons" onClick={gotoLeaderboard}>Leaderboard</button>
             <LogoutComponent/>
         </div >
     );

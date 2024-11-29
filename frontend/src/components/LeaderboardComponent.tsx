@@ -60,7 +60,7 @@ function LeaderboardComponent() {
     return (
         table &&
         <div id="leaderboardContainer">
-            <h1>Leaderboard</h1>
+            <h1 id="leaderbaordHeader">Leaderboard</h1>
             <input id="userSearch" onChange={handleSetSearch} placeholder="Search" value={search} />
             <table id="leaderboardTable">
                 <thead>

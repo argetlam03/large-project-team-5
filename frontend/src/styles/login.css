@@ -1,4 +1,4 @@
-h1 {
+#loginHeader {
     color: white;
     font-family: "Audiowide", sans-serif;
     font-weight: 400;
@@ -14,7 +14,7 @@ h1 {
     padding-top: 0px;
 }
 
-button {
+.login-buttons {
     background: green;
     color: white;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
@@ -54,7 +54,7 @@ button {
       margin-bottom: 5px;
     }
  
-    button {
+    .login-buttons {
       margin-top: 5px;
       margin-bottom: 5px;
     }
@@ -92,7 +92,7 @@ button {
         margin-bottom: 5px;
     }
 
-    button {
+    .login-buttons {
         margin-top: 5px;
         margin-bottom: 5px;
     }

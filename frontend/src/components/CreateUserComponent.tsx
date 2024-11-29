@@ -63,7 +63,7 @@ function CreateUserComponent() {
             <input type="text" id="loginName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
             <input type="text" id="email" placeholder="Email" value={email} onChange={handleSetEmail} />
             <input type="password" id="loginPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
-            <button type="button" id="signUpButton" className="buttons"
+            <button type="button" id="signUpButton" className="buttons login-buttons"
                 onClick={createUser} >Sign Up</button>
             <br/>
             <span id="signupResult">{message}</span>

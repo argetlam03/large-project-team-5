@@ -92,7 +92,7 @@ function ProfileComponent() {
     return (
         recentStats &&
         <div id="profileContainer">
-            <h1>Profile</h1>
+            <h1 id="profileHeader">Profile</h1>
             <div id="profileInfo">
                 <div>
                     First Name:&nbsp;

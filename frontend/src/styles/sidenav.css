@@ -1,0 +1,46 @@
+.sideNavButtons {
+    background: green;
+    color: white;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
+    font-size: 15pt;
+    font-family: Poppins;
+    justify-content: center;
+    min-width: 150px;
+    min-height: 50px;
+    border: 0;
+    padding: 10px;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#sideNavHeader {
+    text-align: right;
+    display: block;
+}
+
+#logoutButton {
+    background: rgb(230, 52, 52);
+    color: white;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
+    font-size: 15pt;
+    font-family: Poppins;
+    justify-content: center;
+    min-width: 150px;
+    min-height: 50px;
+    border: 0;
+    padding: 10px;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.sideNavButtons:hover {
+    background: #05422c;
+}
+
+#logoutButton:hover {
+    background: rgb(100, 23, 23);
+}

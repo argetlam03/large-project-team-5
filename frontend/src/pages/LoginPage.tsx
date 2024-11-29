@@ -5,7 +5,7 @@ import './../styles/login.css';
 const LoginPage = () => {
     return (
         <span>
-            <h1>TypeFaster</h1> <br />
+            <h1 id="loginHeader">TypeFaster</h1> <br />
             <div id="flexbox">
                 <LoginComponent />
                 <CreateUserComponent />
