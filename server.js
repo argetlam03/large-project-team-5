@@ -132,7 +132,7 @@ app.post('/api/getUser', async (req, res, next) => {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        login: login,
+        loginName: login,
         avgAcc: avgAcc,
         avgWpm: avgWpm,
         maxWpm: maxWpm,

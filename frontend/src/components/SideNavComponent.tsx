@@ -18,7 +18,6 @@ function SideNavComponent() {
             <input type="button" id="leaderboardButton" className="buttons" value="Leaderboard" onClick={gotoLeaderboard} />
             <input type="button" id="typeButton" className="buttons" value="Type" onClick={gotoType} />
             <LogoutComponent/>
-            show side navs
         </div >
     );
 };

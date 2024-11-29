@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './../styles/login.css';
+
 function CreateUserComponent() {
     const [message, setMessage] = React.useState('');
     const [firstName, setFirstName] = React.useState('');
@@ -54,17 +56,17 @@ function CreateUserComponent() {
         setPassword(e.target.value);
     }
     return (
-        <div id="createUser">
-            <span id="inner-title">Sign Up</span><br />
+        <div id="signUp">
+            <span id="signup-title">Sign Up</span>
             <input type="text" id="firstName" placeholder="First Name" value={firstName} onChange={handleSetFirstName} />
             <input type="text" id="lastName" placeholder="Last Name" value={lastName} onChange={handleSetLastName} />
             <input type="text" id="loginName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
             <input type="text" id="email" placeholder="Email" value={email} onChange={handleSetEmail} />
             <input type="password" id="loginPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
-            <input type="submit" id="loginButton" className="buttons" value="Sign Up"
-                onClick={createUser} />
+            <button type="button" id="signUpButton" className="buttons"
+                onClick={createUser} >Sign Up</button>
             <br/>
-            <span id="createUserAccount">{message}</span>
+            <span id="signupResult">{message}</span>
         </div>
     );
 };

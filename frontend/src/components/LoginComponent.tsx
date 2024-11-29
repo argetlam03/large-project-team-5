@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './../styles/login.css';
+
 function LoginComponent() {
     const [message, setMessage] = React.useState('');
     const [loginName, setLoginName] = React.useState('');
@@ -40,12 +42,12 @@ function LoginComponent() {
         setPassword(e.target.value);
     }
     return (
-        <div id="loginDiv">
-            <span id="inner-title">Login</span><br />
+        <div id="login">
+            <span id="login-title">Login</span>
             <input type="text" id="loginName" placeholder="Username" onChange={handleSetLoginName} />
             <input type="password" id="loginPassword" placeholder="Password" onChange={handleSetPassword} />
-            <input type="submit" id="loginButton" className="buttons" value="Do It"
-                onClick={doLogin} />
+            <button type="button" id="loginButton" className="buttons"
+                onClick={doLogin}>Login</button>
             <br/>
             <span id="loginResult">{message}</span>
         </div>

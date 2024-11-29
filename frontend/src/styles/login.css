@@ -1,0 +1,105 @@
+h1 {
+    color: white;
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+#flexbox {
+    display: flex;
+    justify-content: center;
+    padding-top: 0px;
+}
+
+button {
+    background: green;
+    color: white;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
+    font-size: 11pt;
+    font-family: Poppins;
+    justify-content: center;
+    min-width: 65px;
+    border: 0;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+#login {
+    background-color: gray;
+    border-color: green;
+    color:  white ;
+    border-style: solid;
+    border-width: 5px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    cursor: default;
+    width: 200px;
+    height: 270px;
+    display: block;
+    border-radius: 8px;
+    padding: 5px;
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+    margin: 5px;
+ 
+    input {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+ 
+    button {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+}
+ 
+#loginResult {
+    font-size: 12pt;
+    font-family: Poppins;
+    color: black;
+}
+ 
+#signUp {
+    color:  white ;
+    background-color: gray;
+    border-color: green ;
+    border-style: solid;
+    border-width: 5px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 40px;
+    cursor: default;
+    width: 200px;
+    display: block;
+    border-radius: 8px;
+    padding: 5px;
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+    margin: 5px;
+
+    input {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    button {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+#signupResult {
+    font-size: 12pt;
+    font-family: Poppins;
+    color: black;
+}

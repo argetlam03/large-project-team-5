@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './../styles/profile.css'
+
 function ProfileComponent() {
     var _ud = localStorage.getItem('user_data');
     
@@ -85,46 +87,45 @@ function ProfileComponent() {
     getUser();
     getRecentStats();
     return (
-        <div id="profileHeader">
-            <div>
-                First Name:&nbsp;
-                {firstName}
+        <div id="profileContainer">
+            <h1>Profile</h1>
+            <div id="profileInfo">
+                <div>
+                    First Name:&nbsp;
+                    <span>{firstName}</span>
+                </div>
+                <div>
+                    Last Name:&nbsp;
+                    <span>{lastName}</span>
+                </div>
+                <div>
+                    Username:&nbsp;
+                    <span>{loginName}</span>
+                </div>
+                <div>
+                    Email:&nbsp;
+                    <span>{email}</span>
+                </div>
+                <div>
+                    Average Accuracy:&nbsp;
+                    <span>{avgAcc}%</span>
+                </div>
+                <div>
+                    Average WPM:&nbsp;
+                    <span>{avgWpm}</span>
+                </div>
+                <div>
+                    Highest WPM:&nbsp;
+                    <span>{maxWpm}</span>
+                </div>
+                <div>
+                    Recent Stats:&nbsp;
+                    <span>{recentStats}</span>
+                </div>
+                <div>
+                    {message}
+                </div>
             </div>
-            <div>
-                Last Name:&nbsp;
-                {lastName}
-            </div>
-            <div>
-                Username:&nbsp;
-                {loginName}
-            </div>
-            <div>
-                Email:&nbsp;
-                {email}
-            </div>
-            <div>
-                Average Accuracy:&nbsp;
-                {avgAcc}
-                %
-            </div>
-            <div>
-                Average WPM:&nbsp;
-                {avgWpm}
-            </div>
-            <div>
-                Highest WPM:&nbsp;
-                {maxWpm}
-            </div>
-            <div>
-                Recent Stats:&nbsp;
-                {recentStats}
-            </div>
-            <div>
-                {message}
-            </div>
-            
-            show profile hopefully
-
         </div >
     );
 };
