@@ -14,7 +14,6 @@ function ProfileComponent() {
     const [maxWpm, setMaxWpm] = React.useState('');
     const [recentStats, setRecentStats] = React.useState('');
 
-
     async function getUser(): Promise<void> {
         var obj = {id: JSON.parse(_ud ? _ud : '').id};
         var js = JSON.stringify(obj);
@@ -84,9 +83,14 @@ function ProfileComponent() {
         return convertedStats;
     };
 
-    getUser();
-    getRecentStats();
+
+    React.useEffect(() => {
+        getUser();
+        getRecentStats();
+    }, []);
+    
     return (
+        recentStats &&
         <div id="profileContainer">
             <h1>Profile</h1>
             <div id="profileInfo">
