@@ -1,0 +1,54 @@
+#typeArea {
+    text-align: center;
+}
+
+#typeHeader {
+    margin-top:1px;
+    color: white;
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
+    margin-bottom: 4px;
+}
+
+#textBox {
+    min-width: 1000px;
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    border: 5px solid green;
+    font-size: 15pt;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 16px;
+}
+
+#typingBox {
+    min-width: 500px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    height: 30px;
+    font-size: 12pt;
+    font-family: "Poppins", sans-serif;
+    cursor: text;
+}
+
+#typingBox:disabled {
+    cursor: not-allowed;
+}
+
+.blackColor {
+    color: black;
+}
+
+.redColor {
+    color: red;
+}
+
+.greenColor {
+    color: green;
+}

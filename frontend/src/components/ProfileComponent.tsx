@@ -9,7 +9,7 @@ function ProfileComponent() {
     const [lastName, setLastName] = React.useState('');
     const [loginName, setLoginName] = React.useState('');
     const [email, setEmail] = React.useState('');
-    const [avgAcc, setAvgAcc] = React.useState('');
+    const [avgAcc, setAvgAcc] = React.useState(0);
     const [avgWpm, setAvgWpm] = React.useState('');
     const [maxWpm, setMaxWpm] = React.useState('');
     const [recentStats, setRecentStats] = React.useState('');
@@ -35,7 +35,7 @@ function ProfileComponent() {
                 setLastName(res.lastName);
                 setLoginName(res.loginName);
                 setEmail(res.email);
-                setAvgAcc(res.avgAcc);
+                setAvgAcc(res.avgAcc.toFixed(2));
                 setAvgWpm(res.avgWpm);
                 setMaxWpm(res.maxWpm);
             }
@@ -123,7 +123,7 @@ function ProfileComponent() {
                     <span>{maxWpm}</span>
                 </div>
                 <div>
-                    Recent Stats:&nbsp;
+                    Recent WPM:&nbsp;
                     <span>{recentStats}</span>
                 </div>
                 <div>

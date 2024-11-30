@@ -82,7 +82,7 @@ function LeaderboardComponent() {
                                 <tr key={i} >
                                     <td>{obj.rank}</td>
                                     <th>{obj.username}</th>
-                                    <td>{obj.avgAcc}</td>
+                                    <td>{obj.avgAcc.toFixed(2)}%</td>
                                     <td>{obj.avgWpm}</td>
                                     <td>{obj.maxWpm}</td>
                                 </tr>
