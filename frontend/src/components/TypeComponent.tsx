@@ -140,6 +140,10 @@ function TypeComponent() {
         }
     };
 
+    const showCursor = (index: number): boolean => {
+        return index === totalLetter;
+    };
+
     return (
         sampleText != '' &&
         <div id="typeArea">
@@ -148,7 +152,10 @@ function TypeComponent() {
                 {
                     Array.from(sampleText).map((obj, i) => {
                         return (
-                            <span id={"letter-" + i} key={i}>{obj}</span>
+                            <span key={i}>
+                                {showCursor(i) && <span className="cursor">|</span>}
+                                <span id={"letter-" + i}>{obj}</span>
+                            </span>
                         );
                     })
                 }
